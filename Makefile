@@ -34,7 +34,7 @@ build:
 	stack build
 
 tests/output/%.vresult: tests/output/%.run
-    valgrind $< > $@
+	valgrind $< > $@
 
 tests/output/%.result: tests/output/%.run FORCE
 	$< > $@
