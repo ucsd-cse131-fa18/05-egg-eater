@@ -487,13 +487,15 @@ data Ext = Src    -- ^ source
          | Exe    -- ^ x86    binary
          | Res    -- ^ output of execution
          | Log    -- ^ compile and execution log
+         | VRes   -- ^ output of valgrind execution
 
 instance Show Ext where
-  show Src = "egg"
-  show Asm = "s"
-  show Exe = "run"
-  show Res = "result"
-  show Log = "log"
+  show Src  = "egg"
+  show Asm  = "s"
+  show Exe  = "run"
+  show Res  = "result"
+  show Log  = "log"
+  show VRes = "vresult"
 
 ext :: FilePath -> Ext -> FilePath
 ext f e = f <.> show e

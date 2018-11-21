@@ -56,16 +56,26 @@ exec :: Text -> IO ()
 exec src = (putStrLn . either id id) =<< run "exec_tmp" (Code src)
 
 --------------------------------------------------------------------------------
+vrun :: FilePath -> Program -> IO Result
+--------------------------------------------------------------------------------
+vrun = run' VRes
+
+--------------------------------------------------------------------------------
 run :: FilePath -> Program -> IO Result
 --------------------------------------------------------------------------------
-run name pgm = do
+run = run' Res
+
+--------------------------------------------------------------------------------
+run' :: Ext -> FilePath -> Program -> IO Result
+--------------------------------------------------------------------------------
+run' ext name pgm = do
   _ <- generateSource name pgm                -- generate source file
   _ <- generateAsm name `catch` esH           -- generate asm
   r <- executeShellCommand logF cmd timeLimit -- compile & run
   readResult resF logF r
   where
     cmd     = printf "make %s"     resF
-    resF    = dirExt "output" name Res
+    resF    = dirExt "output" name ext
     logF    = dirExt "output" name Log
     esH es  = withFile logF AppendMode $ \h -> 
                 esHandle h (return ()) es 

@@ -1,7 +1,7 @@
 ######################################################
 COURSE=cs131f
 ORG=ucsd-cse131-fa18
-ASGN=04
+ASGN=05
 COMPILER=egg 
 EXT=egg 
 ######################################################
@@ -34,7 +34,7 @@ build:
 	stack build
 
 tests/output/%.vresult: tests/output/%.run
-    valgrind $< > $@
+	valgrind $< > $@
 
 tests/output/%.result: tests/output/%.run FORCE
 	$< > $@
